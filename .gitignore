@@ -35,6 +35,5 @@ wp-content/*
 !wp-content/themes/
 wp-content/themes/*
 
-# Тему в репозиторий, за исключением архивов с картинками
 !wp-content/themes/wp_theme/
 !wp-content/themes/wp_theme/index.php
