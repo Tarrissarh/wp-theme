@@ -24,6 +24,8 @@ $themeOptions = get_option('wp_theme');
     <a href="<?php echo esc_url(home_url('/')); ?>"><?php bloginfo('name'); ?></a>,
 <?php endif; ?>
 
+<?php dynamic_sidebar('sidebar-footer-menu'); ?>
+
 <?php
 
 if (function_exists('the_privacy_policy_link')) {

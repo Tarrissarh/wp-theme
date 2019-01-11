@@ -2,7 +2,7 @@
 /**
  * The front page template file
  *
- * @package Wordpress
+ * @package WP_Tarrissarh
  * @subpackage WP_Theme
  * @since 1.0.0
  */

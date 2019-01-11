@@ -21,7 +21,7 @@
 function wp_theme_switch_theme()
 {
 	switch_theme(WP_DEFAULT_THEME);
-	unset( $_GET['activated'] );
+	unset($_GET['activated']);
 	add_action('admin_notices', 'wp_theme_upgrade_notice');
 }
 
