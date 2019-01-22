@@ -11,30 +11,17 @@
  * @since 1.0.0
  */
 ?>
-<?php
+    <?php global $themeOptions, $assetsTheme; ?>
 
-global $themeOptions;
-$themeOptions = get_option('wp_theme');
+    <?php wp_footer(); ?>
 
-?>
+    <?php if (!empty($assetsTheme['opt__code_css'])): ?>
+        <script type="text/javascript"><?=$assetsTheme['opt__code_css'];?></script>
+    <?php endif; ?>
 
-<?php $blog_info = get_bloginfo('name'); ?>
-
-<?php if (!empty($blog_info)): ?>
-    <a href="<?php echo esc_url(home_url('/')); ?>"><?php bloginfo('name'); ?></a>,
-<?php endif; ?>
-
-<?php dynamic_sidebar('sidebar-footer-menu'); ?>
-
-<?php
-
-if (function_exists('the_privacy_policy_link')) {
-    the_privacy_policy_link('', '<span></span>');
-}
-
-?>
-
-<?php wp_footer(); ?>
+    <?php if (!empty($assetsTheme['opt__ScriptsBeforeBodyClose'])): ?>
+        <script type="text/javascript"><?=$assetsTheme['opt__ScriptsBeforeBodyClose'];?></script>
+    <?php endif; ?>
 
 </body>
 </html>

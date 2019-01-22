@@ -76,21 +76,6 @@ add_theme_support(
 	]
 );
 
-/**
- * Add support for core custom logo.
- *
- * @link https://codex.wordpress.org/Theme_Logo
- */
-add_theme_support(
-	'custom-logo',
-	[
-		'height'      => 200,
-		'width'       => 200,
-		'flex-width'  => false,
-		'flex-height' => false,
-	]
-);
-
 // Add theme support for selective refresh for widgets.
 add_theme_support('customize-selective-refresh-widgets');
 
@@ -128,8 +113,8 @@ add_filter('widget_nav_menu_args', 'wp_theme_widget_nav_menu_args');
 function wp_theme_register_nav_menu()
 {
 	register_nav_menus([
-		'top' => 'Top Menu',
-		'bottom' => 'Bottom Menu'
+		'top'       =>  'Top Menu',
+		'bottom'    =>  'Bottom Menu'
 	]);
 }
 
@@ -182,13 +167,8 @@ function wp_theme_assets()
 {
 	wp_deregister_script('jquery');
 
-	if (is_front_page()) {
-		wp_enqueue_script('scripts', THEME_DIR . '/assets/js/front.js', [], '1.0', true);
-		wp_enqueue_style('styles', THEME_DIR . '/assets/css/front.css', [], '1.0');
-	} else {
-		wp_enqueue_script('scripts', THEME_DIR . '/assets/js/main.js', [], '1.0', true);
-		wp_enqueue_style('styles', THEME_DIR . '/assets/css/main.css', [], '1.0');
-	}
+    wp_enqueue_script('scripts', THEME_DIR . '/assets/js/main.js', [], '1.0', true);
+    wp_enqueue_style('styles', THEME_DIR . '/assets/css/main.css', [], '1.0');
 }
 
 /**

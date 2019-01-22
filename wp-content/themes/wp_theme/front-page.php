@@ -8,6 +8,12 @@
  */
 ?>
 
-<?php get_header('front'); ?>
+<?php get_header(); ?>
 
-<?php get_footer('front'); ?>
+<?php
+
+$fields = get_fields();
+
+?>
+
+<?php get_footer(); ?>
