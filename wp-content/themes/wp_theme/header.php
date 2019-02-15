@@ -15,22 +15,7 @@
 
 global $themeOptions, $assetsTheme;
 
-$themeOptions = [];
-$assetsTheme = [];
-
-$options = getOptionFieldsFromACF(acf_get_fields('group_5c40451abaecc'));
-
-foreach ($options as $id => $option) {
-    $themeOptions[$option['name']] = get_field($option['full_name'], 'options');
-}
-
-$advanceds = acf_get_fields('group_advanced');
-
-foreach ($advanceds as $advanced) {
-    if (!in_array($advanced['type'], ['tab', 'group'])) {
-        $assetsTheme[$advanced['name']] = get_field($advanced['key'], 'options');
-    }
-}
+$themeOptions = get_fields('options');
 
 ?>
 <!Doctype html>
@@ -38,7 +23,6 @@ foreach ($advanceds as $advanced) {
 <head>
 	<meta charset="<?php bloginfo('charset'); ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title><?=wp_get_document_title();?></title>
     <!--<link rel="shortcut icon" href="assets/icons/favicon.ico">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png">
@@ -49,44 +33,50 @@ foreach ($advanceds as $advanced) {
     <meta name="msapplication-TileColor" content="#fbfbfb">
     <meta name="theme-color" content="#ffffff">-->
 
-    <!--<meta property="og:title" content=""/>
-    <meta property="og:description" content=""/>
-    <meta property="og:url" content=""/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:site_name" content=""/>
-    <meta property="og:image" content=""/>-->
+    <?php if (is_single()): ?>
+
+        <meta property="og:title" content="<?=get_the_title();?>">
+        <meta property="og:description" content="<?php bloginfo('description'); ?>">
+        <meta property="og:url" content="<?=get_permalink();?>">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="<?php bloginfo('name'); ?>">
+        <meta property="og:image" content="<?=get_the_post_thumbnail_url();?>">
+
+    <?php else: ?>
+
+        <meta property="og:title" content="<?=wp_get_document_title();?>">
+        <meta property="og:description" content="<?php bloginfo('description'); ?>">
+        <meta property="og:url" content="<?=get_home_url();?>">
+        <meta property="og:type" content="website">
+        <meta property="og:site_name" content="<?php bloginfo('name'); ?>">
+        <!--<meta property="og:image" content="">-->
+
+    <?php endif; ?>
 
     <meta name="apple-mobile-web-app-capable" content="yes"/>
     <meta name="apple-touch-fullscreen" content="yes"/>
     <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, minimal-ui"/>
 
 	<?php wp_head(); ?>
 
     <?php
 
-    if (!empty($assetsTheme['opt__google_analytics'])) {
-        echo $assetsTheme['opt__google_analytics'];
-    }
+    getCss();
+    getGoogleAnalytics();
+    getScriptsBeforeHeadClose();
 
     ?>
 
-    <?php if (!empty($assetsTheme['opt__ScriptsBeforeHeadClose'])): ?>
-        <script type="text/javascript"><?=$assetsTheme['opt__ScriptsBeforeHeadClose'];?></script>
-    <?php endif; ?>
 </head>
-
 <body>
+
     <?php
 
-    if (!empty($assetsTheme['opt__yandex_metrika'])) {
-        echo $assetsTheme['opt__yandex_metrika'];
-    }
+    getYandexMetrica();
+    getScriptsAfterBodyOpen();
 
     ?>
-
-    <?php if (!empty($assetsTheme['opt__ScriptsAfterBodyOpen'])): ?>
-        <script type="text/javascript"><?=$assetsTheme['opt__ScriptsAfterBodyOpen'];?></script>
-    <?php endif; ?>
 
     <?php
 

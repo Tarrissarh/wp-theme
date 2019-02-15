@@ -56,11 +56,6 @@ add_theme_support('title-tag');
  */
 add_theme_support('post-thumbnails');
 
-// Remove WP version
-add_filter('the_generator', '__return_empty_string');
-
-add_filter('xmlrpc_enabled', '__return_false');
-
 /*
  * Switch default core markup for search form, comment form, and comments
  * to output valid HTML5.
@@ -88,26 +83,35 @@ add_theme_support('align-wide');
 // Add support for responsive embedded content.
 add_theme_support('responsive-embeds');
 
+// Enabled widgets
+add_theme_support('widgets');
+
+// Remove WP version
+add_filter('the_generator', '__return_empty_string');
+
+add_filter('xmlrpc_enabled', '__return_false');
+
+// Add dir for page template
+add_filter('theme_page_templates', 'wp_theme_page_templates');
+
 // Register base location for menu
 add_action('after_setup_theme', 'wp_theme_register_nav_menu');
 
 // Enabled styles and scripts
 add_action('wp_enqueue_scripts', 'wp_theme_assets');
 
-// Add dir for page template
-add_filter('theme_page_templates', 'wp_theme_page_templates');
-
 // Init new post_type and taxonomies
 add_action('init', 'wp_theme_custom_data');
-
-// Enabled widgets
-add_theme_support('widgets');
 
 // Register widgets
 add_action('widgets_init', 'wp_theme_register_widgets');
 
-// For menu in widgets
-add_filter('widget_nav_menu_args', 'wp_theme_widget_nav_menu_args');
+// JS global variables
+add_action('wp_head','js_variables');
+
+add_action('admin_menu', 'remove_menus');
+add_action('wp_before_admin_bar_render', 'remove_admin_bar_links');
+
 
 // This theme uses wp_nav_menu() in two locations.
 function wp_theme_register_nav_menu()
@@ -136,31 +140,6 @@ function wp_theme_register_widgets()
 }
 
 /**
- * Add custom menu in widget
- * @param array $args
- * @return array
- */
-function wp_theme_widget_nav_menu_args(array $args)
-{
-    return array_merge($args, [
-        'container'         =>  'div',
-        'container_class'   =>  'menu_footer_container',
-        'container_id'      =>  '',
-        'menu_class'        =>  '',
-        'menu_id'           =>  '',
-        'echo'              =>  true,
-        'fallback_cb'       =>  '',
-        'before'            =>  '',
-        'after'             =>  '',
-        'link_before'       =>  '',
-        'link_after'        =>  '',
-        'items_wrap'        =>  '<ul class="menu">%3$s</ul>',
-        'depth'             =>  0,
-        'walker'            =>  new Custom_Menu_Walker()
-    ]);
-}
-
-/**
  * Add scripts and styles
  */
 function wp_theme_assets()
@@ -182,7 +161,7 @@ function wp_theme_page_templates(array $templates):array
 	$templates_files = scandir(locate_template($templates_dir), SCANDIR_SORT_DESCENDING);
 
 	foreach ( $templates_files as $file ) {
-		if ($file == '.' || $file == '..') {
+		if ($file === '.' || $file === '..') {
 			continue;
 		}
 
@@ -264,4 +243,36 @@ function wp_theme_custom_data()
 	];
 
 	register_post_type('post', $args);
+}
+
+
+/**
+ * Remove menu from admin
+ */
+function remove_menus()
+{
+    remove_menu_page('edit.php');// Posts
+    remove_menu_page('edit-comments.php');// Comments
+}
+
+/**
+ * Remove admin bar
+ */
+function remove_admin_bar_links()
+{
+    global $wp_admin_bar;
+
+    $wp_admin_bar->remove_menu('new-post');
+}
+
+/**
+ * JS global variables
+ */
+function js_variables()
+{
+    $variables = [
+        'ajax_url' => admin_url('admin-ajax.php'),
+    ];
+
+    echo '<script type="text/javascript">window.wp_data = ' . json_encode($variables) . ';</script>';
 }

@@ -14,6 +14,8 @@
 
 <?php
 
+global $themeOptions;
+
 /* Start the Loop */
 while (have_posts()):
     the_post();

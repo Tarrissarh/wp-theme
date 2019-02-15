@@ -14,6 +14,8 @@
 
 <?php
 
+global $themeOptions;
+
 if (have_posts()) {
     // Load posts loop.
     while (have_posts()) {

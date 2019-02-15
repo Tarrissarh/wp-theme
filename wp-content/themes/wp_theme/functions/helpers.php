@@ -17,56 +17,68 @@ if (!function_exists('writeToLog')) {
     }
 }
 
-if (!function_exists('getOptionFieldsFromACF')) {
-    /**
-     * Convert data in custom format
-     * @param array $options
-     * @param string $parentFieldName
-     * @return array
-     */
-    function getOptionFieldsFromACF(array $options, string $parentFieldName = ''):array
-    {
-        $fields = [];
-        $fieldsTemp = [];
-        $parent = $parentFieldName;
-        $parentInner = '';
+/**
+ * Add custom code BEFORE </head>
+ */
+function getScriptsBeforeHeadClose()
+{
+    if (get_field('opt__ScriptsBeforeHeadClose', 'options')) {
+        echo '<script type="text/javascript">';
+        the_field('opt__ScriptsBeforeHeadClose', 'options');
+        echo '</script>';
+    }
+}
 
-        foreach ($options as $option) {
-            if ($option['type'] === 'tab') {
-                continue;
-            }
+/**
+ * Add code google analytics BEFORE </head>
+ */
+function getGoogleAnalytics()
+{
+    if (get_field('opt__google_analytics', 'options')) {
+        the_field('opt__google_analytics', 'options');
+    }
+}
 
-            if ($option['type'] === 'group') {
-                $parent = $option['name'];
+/**
+ * Add code yandex metrica AFTER <body>
+ */
+function getYandexMetrica()
+{
+    if (get_field('opt__yandex_metrika', 'options')) {
+        the_field('opt__yandex_metrika', 'options');
+    }
+}
 
-                if (!empty($option['sub_fields'])) {
-                    foreach ($option['sub_fields'] as $sub_field) {
-                        if ($sub_field['type'] === 'group') {
-                            $parentInner = $parent . '_' . $sub_field['name'];
-                        } else {
-                            $parentInner = $parent;
-                        }
+/**
+ * Add custom code AFTER <body>
+ */
+function getScriptsAfterBodyOpen() {
+    if (get_field('opt__ScriptsAfterBodyOpen', 'options')) {
+        echo '<script type="text/javascript">';
+        the_field('opt__ScriptsAfterBodyOpen', 'options');
+        echo '</script>';
+    }
+}
 
-                        if (empty($sub_field['sub_fields']))  {
-                            if (!in_array($sub_field['type'], ['tab', 'group'])) {
-                                $fields[$sub_field['ID']]['name']       =   $sub_field['name'];
-                                $fields[$sub_field['ID']]['key']        =   $sub_field['key'];
-                                $fields[$sub_field['ID']]['full_name']  =   $parentInner . '_' . $sub_field['name'];
-                            }
-                        } else {
-                            $data       =   getOptionFieldsFromACF($sub_field['sub_fields'], $parentInner);
-                            $fieldsTemp =   array_merge($fields, $data);
-                            $fields     =   $fieldsTemp;
-                        }
-                    }
-                }
-            } else {
-                $fields[$option['ID']]['name']       =   $option['name'];
-                $fields[$option['ID']]['key']        =   $option['key'];
-                $fields[$option['ID']]['full_name']  =   $parent . '_' . $option['name'];
-            }
-        }
+/**
+ * Add custom code BEFORE </body>
+ */
+function getScriptsBeforeBodyClose() {
+    if (get_field('opt__ScriptsBeforeBodyClose', 'options')) {
+        echo '<script type="text/javascript">';
+        the_field('opt__ScriptsBeforeBodyClose', 'options');
+        echo '</script>';
+    }
+}
 
-        return $fields;
+/**
+ * Add custom css
+ */
+function getCss()
+{
+    if (get_field('opt__code_css', 'options')) {
+        echo '<style>';
+        the_field('opt__code_css', 'options');
+        echo '</style>';
     }
 }

@@ -11,17 +11,11 @@
  * @since 1.0.0
  */
 ?>
-    <?php global $themeOptions, $assetsTheme; ?>
+    <?php global $themeOptions; ?>
 
     <?php wp_footer(); ?>
 
-    <?php if (!empty($assetsTheme['opt__code_css'])): ?>
-        <script type="text/javascript"><?=$assetsTheme['opt__code_css'];?></script>
-    <?php endif; ?>
-
-    <?php if (!empty($assetsTheme['opt__ScriptsBeforeBodyClose'])): ?>
-        <script type="text/javascript"><?=$assetsTheme['opt__ScriptsBeforeBodyClose'];?></script>
-    <?php endif; ?>
+    <?php getScriptsBeforeBodyClose(); ?>
 
 </body>
 </html>

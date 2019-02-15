@@ -11,6 +11,8 @@
 
 <?php
 
+global $themeOptions;
+
 $fields = get_fields();
 
 ?>
