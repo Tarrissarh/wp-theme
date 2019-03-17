@@ -6,11 +6,10 @@
  *
  * @package WordPress
  * @subpackage WP_Theme
- * @since 1.0.0
+ * @since 1.0.2
  */
-?>
 
-<?php get_header(); ?>
+get_header(); ?>
 
 <?php if (have_posts()): ?>
 

@@ -2,13 +2,12 @@
 /**
  * The front page template file
  *
- * @package WP_Tarrissarh
+ * @package WordPress
  * @subpackage WP_Theme
- * @since 1.0.0
+ * @since 1.0.2
  */
-?>
 
-<?php get_header(); ?>
+get_header(); ?>
 
 <?php
 

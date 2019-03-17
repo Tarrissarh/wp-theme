@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Template Name: Test page template
+ * Template Name: Test post template
  * @package Wordpress
  * @subpackage WP_Theme
  * @since 1.0.2

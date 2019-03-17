@@ -8,14 +8,19 @@
  *
  * @package WordPress
  * @subpackage WP_Theme
- * @since 1.0.0
+ * @since 1.0.2
  */
-?>
-    <?php global $themeOptions; ?>
+
+global $themeOptions; ?>
 
     <?php wp_footer(); ?>
 
-    <?php getScriptsBeforeBodyClose(); ?>
+	<?php
+
+	getScriptsBeforeBodyClose();
+	getScriptsForPage();
+
+	?>
 
 </body>
 </html>

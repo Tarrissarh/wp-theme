@@ -6,15 +6,14 @@
  *
  * @package WordPress
  * @subpackage WP_Theme
- * @since 1.0.0
+ * @since 1.0.2
  */
-?>
 
-<?php get_header(); ?>
+get_header(); ?>
 
 <?php if (have_posts()): ?>
 
-    <?php _e('Search results for:', 'wp_theme'); ?>
+    <?php _e('Search results for', 'wp_theme'); ?>
     <?php echo get_search_query(); ?>
 
     <?php

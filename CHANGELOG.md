@@ -1,4 +1,7 @@
 # Changelog
+## v1.0.2
+Add lang files, add fix, new functional
+
 ## v1.0.1
 Fix theme settings, config, templates
 
